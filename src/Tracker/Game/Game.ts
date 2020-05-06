@@ -1,11 +1,23 @@
-import Player from "./Player";
+import Player from './Player';
 
 class Game {
     private readonly _players: Array<Player>;
+
     private _currentPlayer = 0;
 
-    constructor(players: Array<Player>) {
+    private _name?: string;
+
+    constructor(players: Array<Player>, name?: string) {
         this._players = players;
+        this._name = name;
+    }
+
+    get name(): string | undefined {
+        return this._name;
+    }
+
+    set name(name: string | undefined) {
+        this._name = name;
     }
 
     private get currenctPlayer(): number {
@@ -21,7 +33,7 @@ class Game {
     }
 
     nextPlayer(diceroll: number): void {
-        this._currentPlayer++;
+        this._currentPlayer += 1;
         if (this.currenctPlayer > (this.players.length - 1)) {
             this._currentPlayer = 0;
         }
@@ -32,8 +44,8 @@ class Game {
                     !ownedfield.field.blocked
                     && ownedfield.field.dicenumber === diceroll
                 ) {
-                    for (let i = 0; i < ownedfield.type.give; i++) {
-                        player.addCardByType(ownedfield.field.card);
+                    for (let i = 0; i < ownedfield.buildType.give; i += 1) {
+                        player.addCardByType(ownedfield.field.cardtype);
                     }
                 }
             });

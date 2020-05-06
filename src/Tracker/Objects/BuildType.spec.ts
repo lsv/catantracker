@@ -1,4 +1,4 @@
-import BuildType from "./BuildType";
+import BuildType from './BuildType';
 
 describe('BuildType', () => {
     const buildtype = new BuildType('name', 12);
@@ -9,6 +9,5 @@ describe('BuildType', () => {
 
     it('can get how many cards it give', () => {
         expect(buildtype.give).toBe(12);
-    })
-
+    });
 });

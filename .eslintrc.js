@@ -1,12 +1,27 @@
 module.exports = {
     root: true,
-    parser: '@typescript-eslint/parser',
-    plugins: [
-        '@typescript-eslint',
-    ],
+    env: {
+        node: true,
+    },
     extends: [
-        'eslint:recommended',
-        'plugin:@typescript-eslint/eslint-recommended',
-        'plugin:@typescript-eslint/recommended',
+        'plugin:vue/essential',
+        '@vue/airbnb',
+        '@vue/typescript/recommended',
     ],
+    parserOptions: {
+        ecmaVersion: 2020,
+    },
+    rules: {
+        'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+        'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+        'no-underscore-dangle': 'off',
+        indent: ['error', 4],
+        'max-len': ['error', 200, 2, {
+            ignoreUrls: true,
+            ignoreComments: false,
+            ignoreRegExpLiterals: true,
+            ignoreStrings: true,
+            ignoreTemplateLiterals: true,
+        }],
+    },
 };

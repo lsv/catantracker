@@ -1,13 +1,13 @@
-import CardType from "./CardType";
-import Field from "./Field";
+import CardType from '../Objects/CardType';
+import Field from './Field';
 
 describe('Field', () => {
     const card = CardType.BRICK;
 
     it('can get card type from a field', () => {
         const field = new Field(card, 10);
-        expect(field.card).toBe('Brick');
-    })
+        expect(field.cardtype).toBe('Brick');
+    });
 
     it('Can set dice number on a field', () => {
         const field = new Field(card, 10);
@@ -22,5 +22,4 @@ describe('Field', () => {
         field.removeBlocked();
         expect(field.blocked).toBe(false);
     });
-
 });

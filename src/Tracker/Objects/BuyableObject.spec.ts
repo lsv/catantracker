@@ -1,13 +1,13 @@
-import CardType from "./CardType";
-import BuyableObject from "./BuyableObject";
+import CardType from './CardType';
+import BuyableObject from './BuyableObject';
 
 describe('BuyableObject', () => {
     const object = new BuyableObject(
         'Test',
         [
             CardType.BRICK,
-            CardType.ORE
-        ]
+            CardType.ORE,
+        ],
     );
 
     it('can get name from object', () => {

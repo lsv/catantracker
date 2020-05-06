@@ -1,7 +1,8 @@
-import CardType from "./CardType";
+import CardType from './CardType';
 
 class BuyableObject {
     private readonly _name: string;
+
     private readonly _cardCosts: Array<CardType>;
 
     constructor(name: string, cardCost: Array<CardType>) {

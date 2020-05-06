@@ -1,13 +1,21 @@
-import OwnedField from './OwnedField';
-import CardType from "./CardType";
+import OwnedField from '../Field/OwnedField';
+import CardType from '../Objects/CardType';
 
 class Player {
     private readonly _name: string;
-    private readonly _color: string;
-    private readonly _cards: Array<CardType> = [];
-    private _ownedFields: Array<OwnedField>;
 
-    constructor(name: string, color: string, ownedFields: Array<OwnedField>, cards: Array<CardType> = []) {
+    private readonly _color: string;
+
+    private readonly _cards: Array<CardType> = [];
+
+    private readonly _ownedFields: Array<OwnedField>;
+
+    constructor(
+        name: string,
+        color: string,
+        ownedFields: Array<OwnedField>,
+        cards: Array<CardType> = [],
+    ) {
         this._name = name;
         this._color = color;
         this._ownedFields = ownedFields;
@@ -31,9 +39,7 @@ class Player {
             throw new Error('Player does not own this field');
         }
 
-        const removeIndex = this.ownedFields.findIndex((element) => {
-            return field === element;
-        });
+        const removeIndex = this.ownedFields.findIndex((element) => field === element);
         this.ownedFields.splice(removeIndex, 1);
     }
 
@@ -42,9 +48,7 @@ class Player {
     }
 
     private hasOwnedField(field: OwnedField): boolean {
-        const index = this.ownedFields.findIndex((element) => {
-            return field === element;
-        });
+        const index = this.ownedFields.findIndex((element) => field === element);
         return index > -1;
     }
 
@@ -61,17 +65,13 @@ class Player {
             throw new Error('Player does not have this type of card');
         }
 
-        const removeIndex = this.cards.findIndex((element) => {
-            return element === cost;
-        });
+        const removeIndex = this.cards.findIndex((element) => element === cost);
 
         this.cards.splice(removeIndex, 1);
     }
 
     private hasCardByType(cartType: CardType): boolean {
-        const index = this.cards.findIndex((element) => {
-            return element === cartType;
-        });
+        const index = this.cards.findIndex((element) => element === cartType);
 
         return index > -1;
     }

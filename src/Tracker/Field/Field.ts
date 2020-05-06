@@ -1,18 +1,19 @@
-import CardType from "./CardType";
+import CardType from '../Objects/CardType';
 
 class Field {
+    private readonly _cardtype: CardType;
 
-    private readonly _card: CardType;
     private readonly _dicenumber: number;
+
     private _blocked = false;
 
-    constructor(card: CardType, dicenumber: number) {
-        this._card = card;
+    constructor(cardType: CardType, dicenumber: number) {
+        this._cardtype = cardType;
         this._dicenumber = dicenumber;
     }
 
-    get card(): CardType {
-        return this._card;
+    get cardtype(): CardType {
+        return this._cardtype;
     }
 
     get dicenumber(): number {

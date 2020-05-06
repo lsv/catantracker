@@ -1,43 +1,43 @@
-import App from "./App";
-import Board from "./Board";
-import Game from "./Game";
-import BuyableObject from "./BuyableObject";
-import Field from "./Field";
-import Player from "./Player";
-import CardType from "./CardType";
-import {getOwnedField} from "./Utils";
+import App from './App';
+import Board from './Game/Board';
+import Game from './Game/Game';
+import BuyableObject from './Objects/BuyableObject';
+import Field from './Field/Field';
+import Player from './Game/Player';
+import CardType from './Objects/CardType';
+import { getOwnedField } from './Utils';
 
 describe('App', () => {
     const field = new Field(
         CardType.WOOD,
-        6
+        6,
     );
     const buyobject = new BuyableObject('buy', [CardType.WOOD]);
 
     function createApp(): App {
         return new App(
             new Board([
-                field
+                field,
             ]),
             new Game([
                 new Player(
                     'player1',
                     'color1',
                     [
-                        getOwnedField(CardType.ORE, 8)
-                    ]
+                        getOwnedField(CardType.ORE, 8),
+                    ],
                 ),
                 new Player(
                     'player2',
                     'color2',
                     [
-                        getOwnedField(CardType.WOOD, 6)
-                    ]
-                )
+                        getOwnedField(CardType.WOOD, 6),
+                    ],
+                ),
             ]),
             [
-                buyobject
-            ]
+                buyobject,
+            ],
         );
     }
 
@@ -52,7 +52,7 @@ describe('App', () => {
     it('can not roll 7 without blocked field', () => {
         const app = createApp();
 
-        expect(function() {
+        expect(() => {
             app.roll(7);
         }).toThrowError();
     });
@@ -60,7 +60,7 @@ describe('App', () => {
     it('can not buy object', () => {
         const app = createApp();
 
-        expect(function() {
+        expect(() => {
             app.buyObject(buyobject);
         }).toThrowError();
     });
@@ -80,10 +80,9 @@ describe('App', () => {
         app.roll(6);
         expect(app.game.getCurrentPlayer().cards.length).toBe(1);
         app.discardCards(app.game.getCurrentPlayer(), [
-            CardType.WOOD
-        ])
+            CardType.WOOD,
+        ]);
         expect(app.game.getCurrentPlayer().cards.length).toBe(0);
-
     });
 
     it('can steal card from another player', () => {
@@ -107,12 +106,31 @@ describe('App', () => {
         expect(app.game.players[1].cards.length).toBe(1);
         expect(app.game.players[1].cards[0]).toBe(CardType.WOOD);
 
-        app.exchangeCards(app.game.getCurrentPlayer(), app.game.players[1], [CardType.ORE], [CardType.WOOD]);
+        app.exchangeCards(
+            app.game.getCurrentPlayer(),
+            app.game.players[1],
+            [CardType.ORE],
+            [CardType.WOOD],
+        );
 
         expect(app.game.getCurrentPlayer().cards.length).toBe(1);
         expect(app.game.getCurrentPlayer().cards[0]).toBe(CardType.WOOD);
 
         expect(app.game.players[1].cards.length).toBe(1);
         expect(app.game.players[1].cards[0]).toBe(CardType.ORE);
-    })
+    });
+
+    it('can trade cards', () => {
+        const app = createApp();
+        app.roll(6);
+        app.roll(8);
+
+        expect(app.game.getCurrentPlayer().cards.length).toBe(1);
+        expect(app.game.getCurrentPlayer().cards[0]).toBe(CardType.ORE);
+
+        app.tradeCards(app.game.getCurrentPlayer(), [CardType.ORE], [CardType.WOOD]);
+
+        expect(app.game.getCurrentPlayer().cards.length).toBe(1);
+        expect(app.game.getCurrentPlayer().cards[0]).toBe(CardType.WOOD);
+    });
 });

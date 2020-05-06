@@ -1,6 +1,6 @@
-import Player from "./Player";
-import CardType from "./CardType";
-import {getOwnedField} from "./Utils";
+import Player from './Player';
+import CardType from '../Objects/CardType';
+import { getOwnedField } from '../Utils';
 
 describe('Player', () => {
     const newcard = CardType.SHEEP;
@@ -35,16 +35,16 @@ describe('Player', () => {
         player.addOwnedField(newfield);
         player.addOwnedField(newfield);
         expect(player.ownedFields.length).toBe(3);
-        expect(player.ownedFields[1].field.card).toBe(CardType.ORE);
+        expect(player.ownedFields[1].field.cardtype).toBe(CardType.ORE);
         player.removeOwnedfield(newfield);
         expect(player.ownedFields.length).toBe(2);
-        expect(player.ownedFields[0].field.card).toBe(CardType.WHEAT);
+        expect(player.ownedFields[0].field.cardtype).toBe(CardType.WHEAT);
     });
 
     it('can not remove field from player if not exists', () => {
         const player = new Player('name', 'color', ownedFields, []);
         player.removeOwnedfield(newfield);
-        expect(function() {
+        expect(() => {
             player.removeOwnedfield(newfield);
         }).toThrowError();
     });
@@ -62,7 +62,7 @@ describe('Player', () => {
 
     it('can not remove cards by type from player if the player does not have the card', () => {
         const player = new Player('name', 'color', ownedFields, []);
-        expect(function() {
+        expect(() => {
             player.removeCardByType(CardType.ORE);
         }).toThrowError();
     });

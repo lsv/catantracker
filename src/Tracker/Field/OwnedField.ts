@@ -1,23 +1,23 @@
-import Field from "./Field";
-import BuildType from "./BuildType";
+import Field from './Field';
+import BuildType from '../Objects/BuildType';
 
 class OwnedField {
     _field: Field;
-    _type: BuildType;
+
+    _buildType: BuildType;
 
     constructor(field: Field, type: BuildType) {
         this._field = field;
-        this._type = type;
+        this._buildType = type;
     }
 
-    get type(): BuildType {
-        return this._type;
+    get buildType(): BuildType {
+        return this._buildType;
     }
 
     get field(): Field {
         return this._field;
     }
-
 }
 
 export default OwnedField;

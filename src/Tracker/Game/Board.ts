@@ -1,4 +1,4 @@
-import Field from "./Field";
+import Field from '../Field/Field';
 
 class Board {
     private readonly _fields: Array<Field>;
@@ -9,6 +9,10 @@ class Board {
 
     get fields(): Array<Field> {
         return this._fields;
+    }
+
+    addField(field: Field): void {
+        this._fields.push(field);
     }
 }
 
