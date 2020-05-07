@@ -1,12 +1,17 @@
 import Player from './Player';
 import Game from './Game';
 import { getOwnedField } from '../Utils';
+import { Colors } from '../Colors';
 
 describe('Game', () => {
     const ownedField = getOwnedField();
-    const player1 = new Player('player1', 'color1', [ownedField]);
-    const player2 = new Player('player2', 'color2', []);
-    const game = new Game([player1, player2]);
+    const player1 = new Player('player1', Colors[0], [ownedField]);
+    const player2 = new Player('player2', Colors[1], []);
+
+    let game: Game;
+    beforeEach(() => {
+        game = new Game([player1, player2]);
+    });
 
     it('can set name', () => {
         expect(game.name).toBe(undefined);

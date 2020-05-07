@@ -1,7 +1,11 @@
 import BuildType from './BuildType';
 
 describe('BuildType', () => {
-    const buildtype = new BuildType('name', 12);
+    let buildtype: BuildType;
+
+    beforeEach(() => {
+        buildtype = new BuildType('name', 12);
+    });
 
     it('can get name', () => {
         expect(buildtype.name).toBe('name');

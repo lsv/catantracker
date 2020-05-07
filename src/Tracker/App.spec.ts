@@ -6,6 +6,7 @@ import Field from './Field/Field';
 import Player from './Game/Player';
 import CardType from './Objects/CardType';
 import { getOwnedField } from './Utils';
+import { Colors } from './Colors';
 
 describe('App', () => {
     const field = new Field(
@@ -13,23 +14,24 @@ describe('App', () => {
         6,
     );
     const buyobject = new BuyableObject('buy', [CardType.WOOD]);
+    let app: App;
 
-    function createApp(): App {
-        return new App(
+    beforeEach(() => {
+        app = new App(
             new Board([
                 field,
             ]),
             new Game([
                 new Player(
                     'player1',
-                    'color1',
+                    Colors[0],
                     [
                         getOwnedField(CardType.ORE, 8),
                     ],
                 ),
                 new Player(
                     'player2',
-                    'color2',
+                    Colors[1],
                     [
                         getOwnedField(CardType.WOOD, 6),
                     ],
@@ -39,34 +41,27 @@ describe('App', () => {
                 buyobject,
             ],
         );
-    }
+    });
 
     it('can roll', () => {
-        const app = createApp();
-
         app.roll(2);
         app.roll(6);
         app.roll(7, field);
     });
 
     it('can not roll 7 without blocked field', () => {
-        const app = createApp();
-
         expect(() => {
             app.roll(7);
         }).toThrowError();
     });
 
     it('can not buy object', () => {
-        const app = createApp();
-
         expect(() => {
             app.buyObject(buyobject);
         }).toThrowError();
     });
 
     it('can buy object', () => {
-        const app = createApp();
         expect(app.game.getCurrentPlayer().name).toBe('player1');
         app.roll(6);
         expect(app.game.getCurrentPlayer().name).toBe('player2');
@@ -76,7 +71,6 @@ describe('App', () => {
     });
 
     it('can discard cards', () => {
-        const app = createApp();
         app.roll(6);
         expect(app.game.getCurrentPlayer().cards.length).toBe(1);
         app.discardCards(app.game.getCurrentPlayer(), [
@@ -86,7 +80,6 @@ describe('App', () => {
     });
 
     it('can steal card from another player', () => {
-        const app = createApp();
         app.roll(6);
         expect(app.game.getCurrentPlayer().cards.length).toBe(1);
         expect(app.game.players[0].cards.length).toBe(0);
@@ -96,7 +89,6 @@ describe('App', () => {
     });
 
     it('can exchange cards between players', () => {
-        const app = createApp();
         app.roll(6);
         app.roll(8);
 
@@ -121,7 +113,6 @@ describe('App', () => {
     });
 
     it('can trade cards', () => {
-        const app = createApp();
         app.roll(6);
         app.roll(8);
 

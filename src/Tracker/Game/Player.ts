@@ -1,10 +1,11 @@
 import OwnedField from '../Field/OwnedField';
 import CardType from '../Objects/CardType';
+import { Color } from '../Colors';
 
 class Player {
     private readonly _name: string;
 
-    private readonly _color: string;
+    private readonly _color: Color | undefined;
 
     private readonly _cards: Array<CardType> = [];
 
@@ -12,7 +13,7 @@ class Player {
 
     constructor(
         name: string,
-        color: string,
+        color: Color | undefined,
         ownedFields: Array<OwnedField>,
         cards: Array<CardType> = [],
     ) {
@@ -26,7 +27,7 @@ class Player {
         return this._name;
     }
 
-    get color(): string {
+    get color(): Color | undefined {
         return this._color;
     }
 

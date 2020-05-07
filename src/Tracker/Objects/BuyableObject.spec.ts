@@ -2,13 +2,17 @@ import CardType from './CardType';
 import BuyableObject from './BuyableObject';
 
 describe('BuyableObject', () => {
-    const object = new BuyableObject(
-        'Test',
-        [
-            CardType.BRICK,
-            CardType.ORE,
-        ],
-    );
+    let object: BuyableObject;
+
+    beforeEach(() => {
+        object = new BuyableObject(
+            'Test',
+            [
+                CardType.BRICK,
+                CardType.ORE,
+            ],
+        );
+    });
 
     it('can get name from object', () => {
         expect(object.name).toBe('Test');
