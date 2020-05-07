@@ -17,8 +17,11 @@ export default class PlayerListView extends Vue {
 
 <style scoped>
     span > span:first-child {
-        width: 5px;
-        height: 5px;
-        background-color: #ffffff;
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        border-radius: 10px;
+        background-color: #000;
+        margin-right: 0.5em;
     }
 </style>

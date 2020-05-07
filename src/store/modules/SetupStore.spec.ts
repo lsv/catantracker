@@ -9,6 +9,7 @@ import CardType from '../../Tracker/Objects/CardType';
 import OwnedField from '../../Tracker/Field/OwnedField';
 import BuildType from '../../Tracker/Objects/BuildType';
 import App from '../../Tracker/App';
+import { Colors } from '../../Tracker/Colors';
 
 describe('SetupStore', () => {
     let service: SetupStore;
@@ -30,7 +31,7 @@ describe('SetupStore', () => {
     });
 
     it('can add player', () => {
-        service.addPlayer(new Player('name', 'color', []));
+        service.addPlayer(new Player('name', Colors[0], []));
 
         expect(service.getPlayers.length).toBe(1);
         expect(service.getPlayers[0].name).toBe('name');
@@ -43,8 +44,8 @@ describe('SetupStore', () => {
     });
 
     it('can add owned field', () => {
-        const p1 = new Player('name1', 'color1', []);
-        const p2 = new Player('name2', 'color2', []);
+        const p1 = new Player('name1', Colors[0], []);
+        const p2 = new Player('name2', Colors[1], []);
         const ownedfield1 = new OwnedField(
             new Field(CardType.WOOD, 3),
             new BuildType('settlement', 1),

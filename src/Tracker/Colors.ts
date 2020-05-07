@@ -6,10 +6,10 @@ export interface Color {
 export const Colors: Array<Color> = [
     {
         name: 'Blue',
-        hex: '0000ff',
+        hex: '#0000ff',
     },
     {
         name: 'Red',
-        hex: 'ff0000',
+        hex: '#ff0000',
     },
 ];
