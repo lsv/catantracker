@@ -25,5 +25,6 @@ module.exports = {
         }],
         '@typescript-eslint/no-explicit-any': 'off',
         '@typescript-eslint/ban-ts-ignore': 'off',
+        'class-methods-use-this': 'off',
     },
 };

@@ -1,20 +1,26 @@
-import { shallowMount, VueClass, Wrapper } from '@vue/test-utils';
+import { mount, Wrapper } from '@vue/test-utils';
 // @ts-ignore
 import PlayerListView from './PlayerListView.vue';
+import setupVue from '../testutils';
+import router from '../router';
 import Player from '../Tracker/Game/Player';
-import { Colors } from '../Tracker/Colors';
-
-function getMountedComponent(component: VueClass<any>, propsData: any): Wrapper<any> {
-    return shallowMount(component, {
-        propsData,
-    });
-}
 
 describe('PlayerListView', () => {
-    it('renders with different players', () => {
-        const wrapper: Wrapper<any> = getMountedComponent(PlayerListView, {
-            player: new Player('playername', Colors[0], [], []),
+    let mounted: Wrapper<any>;
+
+    beforeEach(() => {
+        const setup = setupVue();
+        mounted = mount(PlayerListView, {
+            store: setup.store,
+            localVue: setup.vue,
+            router,
+            propsData: {
+                player: new Player('playername', { name: 'white', hex: '#fff' }),
+            },
         });
-        expect(wrapper.text()).toBe('playername');
+    });
+
+    it('renders with different players', () => {
+        expect(mounted.text()).toBe('playername');
     });
 });

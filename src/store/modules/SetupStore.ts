@@ -30,6 +30,11 @@ class SetupStore extends VuexModule {
   }
 
   @Mutation
+  private ADD_BUYABLE_OBJECT(object: BuyableObject): void {
+      this.buyableObjects.push(object);
+  }
+
+  @Mutation
   private ADD_FIELD(field: Field): void {
       this.board.addField(field);
   }
@@ -55,31 +60,40 @@ class SetupStore extends VuexModule {
 
   @Action
   public addPlayer(player: Player): void {
-      this.context.commit('ADD_PLAYER', player);
+      this.ADD_PLAYER(player);
+  }
+
+  @Action
+  public addBuyableObject(object: BuyableObject): void {
+      this.ADD_BUYABLE_OBJECT(object);
   }
 
   @Action
   public addField(field: Field): void {
-      this.context.commit('ADD_FIELD', field);
+      this.ADD_FIELD(field);
   }
 
   @Action
   public addOwnedFieldToPlayer(payload: AddOwnedFieldPayload): void {
-      this.context.commit('ADD_OWNED_FIELD', payload);
+      this.ADD_OWNED_FIELD(payload);
   }
 
   @Action
   public startGame(): void {
-      this.context.commit('START_GAME');
+      this.START_GAME();
   }
 
   @Action
   reset(): void {
-      this.context.commit('RESET');
+      this.RESET();
   }
 
   get getPlayers(): Array<Player> {
       return this.players;
+  }
+
+  get getBuyableObjects(): Array<BuyableObject> {
+      return this.buyableObjects;
   }
 
   get getFields(): Array<Field> {

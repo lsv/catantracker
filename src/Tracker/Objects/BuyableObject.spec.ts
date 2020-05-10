@@ -1,5 +1,6 @@
-import CardType from './CardType';
 import BuyableObject from './BuyableObject';
+import brick from '../Cards/Brick';
+import ore from '../Cards/Ore';
 
 describe('BuyableObject', () => {
     let object: BuyableObject;
@@ -8,9 +9,10 @@ describe('BuyableObject', () => {
         object = new BuyableObject(
             'Test',
             [
-                CardType.BRICK,
-                CardType.ORE,
+                brick,
+                ore,
             ],
+            false,
         );
     });
 
@@ -20,6 +22,10 @@ describe('BuyableObject', () => {
 
     it('can get cost from object', () => {
         expect(object.cardCosts.length).toBe(2);
-        expect(object.cardCosts[0]).toBe('Brick');
+        expect(object.cardCosts[0].name).toBe(brick.name);
+    });
+
+    it('can track', () => {
+        expect(object.track).toBe(false);
     });
 });

@@ -1,12 +1,13 @@
-import CardType from '../Objects/CardType';
 import { getOwnedField } from '../Utils';
 import OwnedField from './OwnedField';
+import brick from '../Cards/Brick';
 
 describe('OwnedField', () => {
     let ownedField: OwnedField;
+    const card = brick;
 
     beforeEach(() => {
-        ownedField = getOwnedField(CardType.BRICK);
+        ownedField = getOwnedField(card);
     });
 
     it('can get build type', () => {
@@ -14,6 +15,6 @@ describe('OwnedField', () => {
     });
 
     it('can get field', () => {
-        expect(ownedField.field.cardtype).toBe(CardType.BRICK);
+        expect(ownedField.field.cardtype.name).toBe(card.name);
     });
 });

@@ -1,4 +1,4 @@
-import CardType from '../Objects/CardType';
+import { CardType } from '../Cards/CardType';
 
 class Field {
     private readonly _cardtype: CardType;

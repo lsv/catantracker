@@ -20,8 +20,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import { getModule } from 'vuex-module-decorators';
+import { Component, Prop, Vue } from 'vue-property-decorator';
 import { Colors } from '../../Tracker/Colors';
 import { NewPlayerForm } from '../../interfaces/NewPlayerForm';
 import Player from '../../Tracker/Game/Player';
@@ -29,7 +28,7 @@ import SetupStore from '../../store/modules/SetupStore';
 
 @Component
 export default class AddPlayerForm extends Vue {
-    public setupstore!: SetupStore;
+    @Prop(Object) setupstore!: SetupStore
 
     public colors = Colors;
 
@@ -42,10 +41,6 @@ export default class AddPlayerForm extends Vue {
         this.setupstore.addPlayer(new Player(this.form.name, this.form.color, []));
         this.form.name = '';
         this.form.color = undefined;
-    }
-
-    public created() {
-        this.setupstore = getModule(SetupStore, this.$store);
     }
 }
 </script>

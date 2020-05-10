@@ -1,8 +1,8 @@
-import CardType from '../Objects/CardType';
 import Field from './Field';
+import brick from '../Cards/Brick';
 
 describe('Field', () => {
-    const card = CardType.BRICK;
+    const card = brick;
     let field: Field;
 
     beforeEach(() => {
@@ -10,7 +10,7 @@ describe('Field', () => {
     });
 
     it('can get card type from a field', () => {
-        expect(field.cardtype).toBe('Brick');
+        expect(field.cardtype.name).toBe(brick.name);
     });
 
     it('Can set dice number on a field', () => {

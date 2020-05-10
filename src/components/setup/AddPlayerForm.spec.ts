@@ -1,31 +1,40 @@
 import { getModule } from 'vuex-module-decorators';
+import { mount, Wrapper } from '@vue/test-utils';
 // @ts-ignore
 import AddPlayerForm from './AddPlayerForm.vue';
 import SetupStore from '../../store/modules/SetupStore';
-import { testVue, TestVue } from '../../testutils';
 import { Colors } from '../../Tracker/Colors';
+import router from '../../router';
+import setupVue from '../../testutils';
 
 describe('AddPlayerForm', () => {
-    let testvue: TestVue;
     let module: SetupStore;
+    let mounted: Wrapper<any>;
 
     beforeEach(() => {
-        testvue = testVue(AddPlayerForm);
-        module = getModule(SetupStore, testvue.store);
+        const setup = setupVue();
+        module = getModule(SetupStore, setup.store);
+
+        mounted = mount(AddPlayerForm, {
+            store: setup.store,
+            localVue: setup.vue,
+            router,
+            propsData: {
+                setupstore: module,
+            },
+        });
     });
 
     it('can add player', async () => {
-        const { wrapper } = testvue;
-
-        const nameInput = wrapper.find('#name');
+        const nameInput = mounted.find('#name');
         nameInput.setValue('name1');
 
-        const colorInput = wrapper.find('#color');
+        const colorInput = mounted.find('#color');
         colorInput.setValue(Colors[0]);
 
-        const form = wrapper.find('form');
+        const form = mounted.find('form');
         form.trigger('submit.prevent');
-        await wrapper.vm.$nextTick();
+        await mounted.vm.$nextTick();
 
         expect(module.getPlayers.length).toBe(1);
     });

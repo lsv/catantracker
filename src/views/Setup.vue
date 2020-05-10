@@ -4,64 +4,35 @@
 
         <b-row>
             <b-col md="auto">
-                <div role="tablist">
-                    <b-card no-body class="mb-1">
-                        <b-card-header header-tag="header" role="tab">
-                            <b-button block href="#" v-b-toggle.accordion-1 variant="info">
-                                Add players
-                            </b-button>
-                        </b-card-header>
-                        <b-collapse id="accordion-1">
-                            <b-card-body>
-                                <add-player-form></add-player-form>
-                            </b-card-body>
-                        </b-collapse>
-                    </b-card>
+                <b-tabs fill>
+                    <b-tab title="Add buyable objects" active>
+                        <add-buyable-objects></add-buyable-objects>
+                    </b-tab>
 
-                    <b-card no-body class="mb-1">
-                        <b-card-header header-tag="header" role="tab">
-                            <b-button block href="#" v-b-toggle.accordion-2 variant="info" disabled>
-                                Add buyable objects
-                            </b-button>
-                        </b-card-header>
-                        <b-collapse id="accordion-2">
-                            <b-card-body>
-                                body
-                            </b-card-body>
-                        </b-collapse>
-                    </b-card>
+                    <b-tab title="Add players" :disabled="hasNotBuyableObjects()">
+                        <add-player-form :setupstore="setupstore"></add-player-form>
+                    </b-tab>
 
-                    <b-card no-body class="mb-1">
-                        <b-card-header header-tag="header" role="tab">
-                            <b-button block href="#" v-b-toggle.accordion-3 variant="info" disabled>
-                                Setup board
-                            </b-button>
-                        </b-card-header>
-                        <b-collapse id="accordion-3">
-                            <b-card-body>
-                                body
-                            </b-card-body>
-                        </b-collapse>
-                    </b-card>
+                    <b-tab title="Setup board" disabled>
+                        body
+                    </b-tab>
 
-                    <b-card no-body class="mb-1">
-                        <b-card-header header-tag="header" role="tab">
-                            <b-button block href="#" v-b-toggle.accordion-4 variant="info" disabled>
-                                Set players owned fields
-                            </b-button>
-                        </b-card-header>
-                        <b-collapse id="accordion-4">
-                            <b-card-body>
-                                body
-                            </b-card-body>
-                        </b-collapse>
-                    </b-card>
-                </div>
+                    <b-tab title="Set players owned fields" disabled>
+                        body
+                    </b-tab>
+                </b-tabs>
             </b-col>
             <b-col col md="3">
                 <b-list-group>
+                    <h3>Players</h3>
                     <b-list-group-item v-for="player in setupstore.getPlayers" v-bind:key="player.name">
                         <player-list-view :player="player"></player-list-view>
+                    </b-list-group-item>
+                </b-list-group>
+                <b-list-group>
+                    <h3>Buyable objects</h3>
+                    <b-list-group-item v-for="object in setupstore.getBuyableObjects" v-bind:key="object.name">
+                        <buyable-object-list-view :object="object"></buyable-object-list-view>
                     </b-list-group-item>
                 </b-list-group>
             </b-col>
@@ -77,15 +48,23 @@ import { getModule } from 'vuex-module-decorators';
 import PlayerListView from '../components/PlayerListView.vue';
 import SetupStore from '../store/modules/SetupStore';
 import AddPlayerForm from '../components/setup/AddPlayerForm.vue';
+import AddBuyableObjects from '../components/setup/AddBuyableObjects.vue';
+import BuyableObjectListView from '../components/BuyableObjectListView.vue';
 
 @Component({
-    components: { AddPlayerForm, PlayerListView },
+    components: {
+        AddPlayerForm, PlayerListView, AddBuyableObjects, BuyableObjectListView,
+    },
 })
 export default class Setup extends Vue {
-    public setupstore!: SetupStore;
+        public setupstore!: SetupStore;
 
-    public created() {
-        this.setupstore = getModule(SetupStore, this.$store);
-    }
+        public hasNotBuyableObjects(): boolean {
+            return this.setupstore.getBuyableObjects.length === 0;
+        }
+
+        public created(): void {
+            this.setupstore = getModule(SetupStore, this.$store);
+        }
 }
 </script>

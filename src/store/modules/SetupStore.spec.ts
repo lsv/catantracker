@@ -5,11 +5,12 @@ import SetupStore from './SetupStore';
 import AppStore from './AppStore';
 import Player from '../../Tracker/Game/Player';
 import Field from '../../Tracker/Field/Field';
-import CardType from '../../Tracker/Objects/CardType';
 import OwnedField from '../../Tracker/Field/OwnedField';
 import BuildType from '../../Tracker/Objects/BuildType';
 import App from '../../Tracker/App';
 import { Colors } from '../../Tracker/Colors';
+import Wood from '../../Tracker/Cards/Wood';
+import Ore from '../../Tracker/Cards/Ore';
 
 describe('SetupStore', () => {
     let service: SetupStore;
@@ -38,20 +39,20 @@ describe('SetupStore', () => {
     });
 
     it('can add field', () => {
-        service.addField(new Field(CardType.WOOD, 3));
+        service.addField(new Field(Wood, 3));
         expect(service.getFields.length).toBe(1);
-        expect(service.getFields[0].cardtype).toBe(CardType.WOOD);
+        expect(service.getFields[0].cardtype).toBe(Wood);
     });
 
     it('can add owned field', () => {
         const p1 = new Player('name1', Colors[0], []);
         const p2 = new Player('name2', Colors[1], []);
         const ownedfield1 = new OwnedField(
-            new Field(CardType.WOOD, 3),
+            new Field(Wood, 3),
             new BuildType('settlement', 1),
         );
         const ownedfield2 = new OwnedField(
-            new Field(CardType.ORE, 3),
+            new Field(Ore, 3),
             new BuildType('settlement', 1),
         );
 
@@ -66,11 +67,11 @@ describe('SetupStore', () => {
 
         service.addOwnedFieldToPlayer({ player: p1, field: ownedfield1 });
         expect(p1s.ownedFields.length).toBe(1);
-        expect(p1s.ownedFields[0].field.cardtype).toBe(CardType.WOOD);
+        expect(p1s.ownedFields[0].field.cardtype.name).toBe(Wood.name);
 
         service.addOwnedFieldToPlayer({ player: p2, field: ownedfield2 });
         expect(p2s.ownedFields.length).toBe(1);
-        expect(service.getPlayers[1].ownedFields[0].field.cardtype).toBe(CardType.ORE);
+        expect(service.getPlayers[1].ownedFields[0].field.cardtype.name).toBe(Ore.name);
     });
 
     it('can start game', () => {

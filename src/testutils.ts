@@ -1,37 +1,30 @@
 import Vuex, { Store } from 'vuex';
-import Vue from 'vue';
-import {
-    createLocalVue, mount, VueClass, Wrapper,
-} from '@vue/test-utils';
+import { VueConstructor } from 'vue';
+import { createLocalVue } from '@vue/test-utils';
 import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue';
 import AppStore from './store/modules/AppStore';
 import SetupStore from './store/modules/SetupStore';
-import router from './router';
 
-export interface TestVue {
-    wrapper: Wrapper<Vue>;
+interface MyVue {
+    vue: VueConstructor;
     store: Store<any>;
-    vue: typeof Vue;
 }
 
-export function testVue(component: VueClass<Vue>): TestVue {
-    const localVue = createLocalVue();
-    localVue.use(Vuex);
-    localVue.use(BootstrapVue);
-    localVue.use(BootstrapVueIcons);
+export default function setupVue(): MyVue {
+    const vue = createLocalVue();
+    vue.use(Vuex);
+    vue.use(BootstrapVue);
+    vue.use(BootstrapVueIcons);
 
-    const localStore = new Vuex.Store({
+    const store = new Vuex.Store({
         modules: {
             AppStore,
             SetupStore,
         },
     });
 
-    const wrapper = mount(component, { store: localStore, localVue, router });
-
     return {
-        wrapper,
-        store: localStore,
-        vue: localVue,
+        vue,
+        store,
     };
 }

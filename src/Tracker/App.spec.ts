@@ -4,16 +4,17 @@ import Game from './Game/Game';
 import BuyableObject from './Objects/BuyableObject';
 import Field from './Field/Field';
 import Player from './Game/Player';
-import CardType from './Objects/CardType';
 import { getOwnedField } from './Utils';
 import { Colors } from './Colors';
+import wood from './Cards/Wood';
+import ore from './Cards/Ore';
 
 describe('App', () => {
     const field = new Field(
-        CardType.WOOD,
+        wood,
         6,
     );
-    const buyobject = new BuyableObject('buy', [CardType.WOOD]);
+    const buyobject = new BuyableObject('buy', [wood], false);
     let app: App;
 
     beforeEach(() => {
@@ -26,14 +27,14 @@ describe('App', () => {
                     'player1',
                     Colors[0],
                     [
-                        getOwnedField(CardType.ORE, 8),
+                        getOwnedField(ore, 8),
                     ],
                 ),
                 new Player(
                     'player2',
                     Colors[1],
                     [
-                        getOwnedField(CardType.WOOD, 6),
+                        getOwnedField(wood, 6),
                     ],
                 ),
             ]),
@@ -74,7 +75,7 @@ describe('App', () => {
         app.roll(6);
         expect(app.game.getCurrentPlayer().cards.length).toBe(1);
         app.discardCards(app.game.getCurrentPlayer(), [
-            CardType.WOOD,
+            wood,
         ]);
         expect(app.game.getCurrentPlayer().cards.length).toBe(0);
     });
@@ -83,7 +84,7 @@ describe('App', () => {
         app.roll(6);
         expect(app.game.getCurrentPlayer().cards.length).toBe(1);
         expect(app.game.players[0].cards.length).toBe(0);
-        app.stealCard(app.game.getCurrentPlayer(), app.game.players[0], CardType.WOOD);
+        app.stealCard(app.game.getCurrentPlayer(), app.game.players[0], wood);
         expect(app.game.getCurrentPlayer().cards.length).toBe(0);
         expect(app.game.players[0].cards.length).toBe(1);
     });
@@ -93,23 +94,23 @@ describe('App', () => {
         app.roll(8);
 
         expect(app.game.getCurrentPlayer().cards.length).toBe(1);
-        expect(app.game.getCurrentPlayer().cards[0]).toBe(CardType.ORE);
+        expect(app.game.getCurrentPlayer().cards[0]).toBe(ore);
 
         expect(app.game.players[1].cards.length).toBe(1);
-        expect(app.game.players[1].cards[0]).toBe(CardType.WOOD);
+        expect(app.game.players[1].cards[0]).toBe(wood);
 
         app.exchangeCards(
             app.game.getCurrentPlayer(),
             app.game.players[1],
-            [CardType.ORE],
-            [CardType.WOOD],
+            [ore],
+            [wood],
         );
 
         expect(app.game.getCurrentPlayer().cards.length).toBe(1);
-        expect(app.game.getCurrentPlayer().cards[0]).toBe(CardType.WOOD);
+        expect(app.game.getCurrentPlayer().cards[0]).toBe(wood);
 
         expect(app.game.players[1].cards.length).toBe(1);
-        expect(app.game.players[1].cards[0]).toBe(CardType.ORE);
+        expect(app.game.players[1].cards[0]).toBe(ore);
     });
 
     it('can trade cards', () => {
@@ -117,11 +118,11 @@ describe('App', () => {
         app.roll(8);
 
         expect(app.game.getCurrentPlayer().cards.length).toBe(1);
-        expect(app.game.getCurrentPlayer().cards[0]).toBe(CardType.ORE);
+        expect(app.game.getCurrentPlayer().cards[0]).toBe(ore);
 
-        app.tradeCards(app.game.getCurrentPlayer(), [CardType.ORE], [CardType.WOOD]);
+        app.tradeCards(app.game.getCurrentPlayer(), [ore], [wood]);
 
         expect(app.game.getCurrentPlayer().cards.length).toBe(1);
-        expect(app.game.getCurrentPlayer().cards[0]).toBe(CardType.WOOD);
+        expect(app.game.getCurrentPlayer().cards[0]).toBe(wood);
     });
 });

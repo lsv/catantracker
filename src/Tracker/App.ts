@@ -3,7 +3,7 @@ import Game from './Game/Game';
 import Field from './Field/Field';
 import Player from './Game/Player';
 import BuyableObject from './Objects/BuyableObject';
-import CardType from './Objects/CardType';
+import { CardType } from './Cards/CardType';
 
 class App {
     board: Board;
